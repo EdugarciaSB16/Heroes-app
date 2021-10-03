@@ -1,10 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
+import { AuthContext } from '../../auth/AuthContext'
+import Button from '@restart/ui/esm/Button'
+import { types } from '../../types/types';
 
 const NavBar = () => {
+
+    const { user: { name }, dispatch } = useContext(AuthContext);
+    const { replace } = useHistory();
+
+    const handleLogout = () => {
+        dispatch({
+            type: types.logout
+        });
+        replace('/login');
+    }
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
@@ -15,7 +29,10 @@ const NavBar = () => {
                     <Nav.Link as={Link} to="/heroSearch">Search Hero</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link as={Link} to="/login" className="justify-content-end">Logout</Nav.Link>
+                    <Navbar.Text>{name}</Navbar.Text>
+                    <Button style={{color:'white'}} className="btn btn-outline-dark" onClick={ handleLogout }>
+                       Logout
+                   </Button>
                 </Nav>
             </Container>
         </Navbar>

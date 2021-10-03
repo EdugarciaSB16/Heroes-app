@@ -10,7 +10,7 @@ const SearchScreen = ({ history }) => {
 
     const location = useLocation()
     const { q = '' } = queryString.parse( location.search )
-    const [value, handleInputChange, reset] = useForm({
+    const [value, handleInputChange] = useForm({
         hero: q
     })
     const { hero } = value
